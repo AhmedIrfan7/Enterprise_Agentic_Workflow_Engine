@@ -1,4 +1,4 @@
-from langchain.memory import ConversationBufferWindowMemory
+from langchain_classic.memory import ConversationBufferWindowMemory
 from langchain_community.chat_message_histories import SQLChatMessageHistory
 from app.config import get_settings
 
