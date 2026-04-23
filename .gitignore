@@ -1,0 +1,8 @@
+# Root monorepo gitignore
+.env
+.env.*
+!.env.example
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
