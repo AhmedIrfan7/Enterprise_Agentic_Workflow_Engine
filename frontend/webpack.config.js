@@ -1,4 +1,5 @@
 const path = require("path");
+const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
@@ -40,6 +41,11 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "development"),
+      "process.env.API_BASE_URL": JSON.stringify(process.env.API_BASE_URL || ""),
+      "process.env": JSON.stringify({}),
+    }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       favicon: "./public/favicon.ico",
@@ -50,9 +56,16 @@ module.exports = {
     port: 3000,
     historyApiFallback: true,
     hot: true,
+    webSocketServer: "ws",
+    client: { webSocketURL: "ws://localhost:3000/hmr-ws" },
     proxy: [
       {
-        context: ["/api", "/ws"],
+        context: ["/api"],
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
+      {
+        context: ["/ws"],
         target: "http://localhost:8000",
         ws: true,
         changeOrigin: true,
